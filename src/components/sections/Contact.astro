@@ -1,0 +1,33 @@
+---
+import { site } from '../../config/site';
+import { messages } from '../../i18n';
+import ContactIcon from '../ui/ContactIcon.astro';
+import type { Locale } from '../../types/portfolio';
+const t = messages[(Astro.props as { lang: Locale }).lang];
+const channels = [
+	{ name: 'WhatsApp', icon: 'whatsapp' as const, url: site.publicWhatsApp ? `https://wa.me/${site.publicWhatsApp}` : '' },
+	{ name: 'Instagram', icon: 'instagram' as const, url: site.socialUrls.Instagram },
+	{ name: 'LinkedIn', icon: 'linkedin' as const, url: site.socialUrls.LinkedIn },
+].filter(channel => channel.url);
+---
+<section id="contact" class="contact"><div class="container"><p class="section-label">07 / {t.nav.contact}</p><div class="two-column"><div><h2>{t.connect}<span aria-hidden="true"> ↗</span></h2><p>{t.contactBody}</p></div><div class="contact-links">
+	{site.publicEmail ? <><p class="email-label"><ContactIcon name="email" />{t.email}</p><a class="contact-email" href={`mailto:${site.publicEmail}`}>{site.publicEmail} <span aria-hidden="true">↗</span></a><button hidden id="copy-email" data-email={site.publicEmail} data-success={t.copied} data-error={t.copyFailed} class="button secondary">{t.copy}</button><p id="copy-status" role="status"></p></> : <p>{t.contactPending}</p>}
+	<div class="social-cards">{channels.map(channel => <a class="social-card" data-channel={channel.icon} href={channel.url} target="_blank" rel="noopener noreferrer"><span class={`social-icon ${channel.icon}`}><ContactIcon name={channel.icon} /></span><span>{channel.name}</span><span class="social-arrow" aria-hidden="true">↗</span><span class="sr-only"> ({t.newTab})</span></a>)}</div>
+	<p class="contact-location">Depok, Indonesia<br />WIB · UTC+7</p>
+</div></div></div></section>
+<style>
+	.contact { position: relative; isolation: isolate; overflow: clip; background: radial-gradient(ellipse at 90% 0, #163d60, transparent 65%), var(--footer); }
+	.contact::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .1; background-image: linear-gradient(#6ed2f4 1px, transparent 1px), linear-gradient(90deg, #6ed2f4 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, transparent, #000); }
+	.two-column { grid-template-columns: .8fr 1.2fr; gap: 48px; }
+	.email-label { display: flex; align-items: center; gap: 14px; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
+	.contact-email { font-size: clamp(1.15rem, 2.2vw, 1.8rem); letter-spacing: -.04em; text-decoration: none; margin-bottom: 18px; }
+	.contact-email span { display: inline-block; margin-left: 12px; }
+	.social-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 26px; }
+	.social-card { display: flex; align-items: center; gap: 10px; min-height: 68px; padding: 14px; background: #182840; border: 1px solid #8499b8; border-radius: 16px; text-decoration: none; font-size: .82rem; font-weight: 600; }
+	.social-card:hover { background: #223955; border-color: #a8c6ff; }
+	.social-icon { display: flex; flex-shrink: 0; }
+	.whatsapp { color: #5de396; } .instagram { color: #ff69ad; } .linkedin { color: #80baff; }
+	.social-arrow { margin-left: auto; color: #b6c4d8; }
+	@media (max-width: 1100px) { .two-column { grid-template-columns: 1fr; gap: 24px; } }
+	@media (max-width: 500px) { .social-cards { grid-template-columns: 1fr; } .social-card { min-height: 60px; } }
+</style>

@@ -1,0 +1,21 @@
+---
+import { messages } from '../../i18n';
+import { path } from '../../utils/paths';
+import { imageAsset } from '../../utils/assets';
+import type { Locale, Project } from '../../types/portfolio';
+interface Props { lang: Locale; projects: Project[]; }
+const { lang, projects } = Astro.props;
+const t = messages[lang];
+---
+<div class="project-group" data-carousel="projects">
+  {projects.length > 1 && <div class="project-navigation-heading"><span>{projects.length} {lang === 'id' ? 'proyek untuk dijelajahi' : 'projects to explore'}</span><span>{lang === 'id' ? 'Geser atau pilih titik untuk melihat proyek lainnya' : 'Swipe or select a dot to discover more'}</span></div>}
+  {projects.length ? <div class="project-track" tabindex="0" aria-label={t.projectsTitle}>{projects.map(project => {
+    const cover = project.cover || project.gallery?.find(image => image.cover)?.path || [...(project.gallery || [])].sort((a,b) => a.order - b.order)[0]?.path;
+    const alt = project.gallery?.find(image => image.path === cover)?.alt[lang] || project.title[lang];
+    return <article class="card project-card">
+      <div class="project-cover">{cover ? <img src={imageAsset(cover)} alt={alt} width="900" height="600" loading="lazy" /> : <div class="project-placeholder"><span class="eyebrow">{project.kind?.[lang]}</span><strong>{project.title[lang]}</strong><span>{project.status[lang]}</span></div>}</div>
+      <div class="project-content"><p class="eyebrow">{project.kind?.[lang] || project.date?.slice(0,4)}</p><h3>{project.title[lang]}</h3><span class="badge">{project.status[lang]}{project.status.en === 'In development' && <span class="development-dots" aria-hidden="true"><i></i><i></i><i></i></span>}</span><p>{project.summary[lang]}</p><div class="tags">{project.tags.slice(0,4).map(tag => <span>{tag}</span>)}</div><a class="button primary" href={path(`${lang}/work/${project.slug}/`)}>{t.overview} →</a></div>
+    </article>;
+  })}</div> : <p class="empty-state">{t.emptyProjects}</p>}
+  <div class="carousel-controls gallery-navigation" hidden><button class="icon-button" data-prev aria-label={t.previous}>←</button><div class="gallery-dots">{projects.map((project,index) => <button data-project-select={index} aria-label={`${index + 1}: ${project.title[lang]}`} aria-pressed={index === 0 ? 'true' : 'false'}><span></span></button>)}</div><button class="icon-button" data-next aria-label={t.next}>→</button><span class="project-position" data-carousel-status aria-live="polite"></span></div>
+</div>

@@ -1,0 +1,26 @@
+---
+import { creativeWorks, applicationVisuals } from '../../data/magang';
+import { imageAsset } from '../../utils/assets';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = applicationVisuals[lang];
+const works = creativeWorks.map(work => ({ ...work, src: imageAsset(work.image) })).filter(work => work.src);
+---
+{works.length > 0 && <div class="creative-gallery">{works.map(work => <figure class="gallery-card" data-gallery-item={work.id}>
+    <a class="gallery-thumbnail" href={work.src} data-dialog={`artwork-${work.id}`} aria-label={`${t.enlarge}: ${work.title[lang]}`}><img class:list={{ document: work.category !== 'event' }} src={work.src} alt={work.alt[lang]} width="800" height="600" loading="lazy" /></a>
+    <figcaption><h3>{work.title[lang]}</h3><p>{work.caption[lang]}</p>{work.contribution && <p><strong>{t.contribution}:</strong> {work.contribution[lang]}</p>}</figcaption>
+    <dialog id={`artwork-${work.id}`} aria-labelledby={`artwork-title-${work.id}`}><form method="dialog"><button class="button secondary" aria-label={`${t.close}: ${work.title[lang]}`}>{t.close}</button></form><h3 id={`artwork-title-${work.id}`}>{work.title[lang]}</h3><img src={work.src} alt={work.alt[lang]} width="1200" height="900" loading="lazy" /><p>{work.caption[lang]}</p>{work.contribution && <p><strong>{t.contribution}:</strong> {work.contribution[lang]}</p>}</dialog>
+</figure>)}</div>}
+<style>
+    .creative-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; margin-top: 32px; }
+    .gallery-card { margin: 0; border: 1px solid var(--border); background: var(--surface); border-radius: 18px; overflow: hidden; break-inside: avoid; }
+    .gallery-thumbnail { display: block; margin: 4px; border-radius: 14px; overflow: hidden; transition: box-shadow 180ms; }
+    .gallery-thumbnail:hover, .gallery-thumbnail:focus-visible { box-shadow: 0 0 0 3px var(--primary); }
+    .gallery-thumbnail img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--raised); }
+    .gallery-thumbnail img.document { object-fit: contain; }
+    figcaption { padding: 18px; } figcaption h3 { font-size: 1.05rem; } figcaption p { font-size: .88rem; }
+    dialog img { width: 100%; height: auto; max-height: 65vh; object-fit: contain; }
+    @media (max-width: 767px) { .creative-gallery { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { .gallery-thumbnail { transition: none; } }
+    @media print { .creative-gallery { display: block; } .gallery-card { margin-bottom: 5mm; background: #fff; color: #111; } .gallery-thumbnail img { height: auto; max-height: 90mm; object-fit: contain; } dialog { display: none !important; } figcaption p { color: #111; } }
+</style>

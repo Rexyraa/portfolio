@@ -1,0 +1,29 @@
+---
+import { sourceAsset } from '../../utils/assets';
+interface Props { file: string; monogram: string; alt: string; tool?: boolean; }
+const { file, monogram, alt, tool = false } = Astro.props;
+const src = sourceAsset(file);
+---
+<span class:list={['asset-mark', { 'tool-mark': tool }]}>
+    {src && <img src={src} alt={alt} width="64" height="64" loading="lazy" />}
+    <span class="asset-fallback" hidden={!!src} aria-hidden="true">{monogram}</span>
+</span>
+<style>
+    .asset-mark { display: grid; place-items: center; width: 56px; height: 56px; flex-shrink: 0; border-radius: 14px; background: var(--raised); color: var(--primary); font-weight: 750; font-size: 1.1rem; }
+    .asset-mark img { width: 100%; height: 100%; object-fit: contain; padding: 8px; border-radius: inherit; background: #fff; }
+    .tool-mark { width: 64px; height: 64px; margin-inline: auto; }
+</style>
+<script>
+    document.querySelectorAll<HTMLImageElement>('.asset-mark img').forEach(image => {
+        const fallback = () => {
+            image.hidden = true;
+            image.closest('.asset-mark')?.querySelector<HTMLElement>('.asset-fallback')?.removeAttribute('hidden');
+        };
+        image.addEventListener('error', fallback);
+        image.addEventListener('load', () => {
+            image.hidden = false;
+            image.closest('.asset-mark')?.querySelector<HTMLElement>('.asset-fallback')?.setAttribute('hidden', '');
+        });
+        if (image.complete && image.currentSrc && !image.naturalWidth) fallback();
+    });
+</script>

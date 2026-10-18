@@ -1,0 +1,37 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+
+for (const locale of ['id', 'en']) test(`${locale}: Mathcademy static narrative and navigation`, () => {
+    const read = file => readFileSync(new URL(`../../dist/${file}`, import.meta.url), 'utf8');
+    const html = read(`${locale}/magang/index.html`);
+    const home = read(`${locale}/index.html`);
+    assert(html.includes(`lang="${locale}"`));
+    assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
+    assert.equal((html.match(/class="application-section"/g) || []).length, 6);
+    assert.equal((html.match(/class="narrative-paragraph"/g) || []).length, 12);
+    const sectionIds = ['introduction', 'variansi', 'sampling', 'biner', 'consideration', 'another-side'];
+    for (const id of sectionIds) assert(html.includes(`id="${id}"`) && html.includes(`href="#${id}"`));
+    assert.deepEqual([...html.matchAll(/<section id="([^"]+)" class="application-section"/g)].map(match => match[1]), sectionIds);
+    for (const name of ['Athalla Reinaldi', 'Variansi', 'Sampling', 'Bang Rifki']) assert(html.includes(name));
+    assert(html.includes(`/${locale}/#about`));
+    assert(html.includes(`/${locale === 'id' ? 'en' : 'id'}/magang/`));
+    assert(home.indexOf('id="about"') < home.indexOf('id="magang-card-title"'));
+    assert(home.indexOf('id="magang-card-title"') < home.indexOf('id="skills"'));
+    assert(home.includes(`/${locale}/magang/`));
+    assert(html.includes('Biner'));
+    assert(html.includes(locale === 'id' ? 'Pilihan ketiga' : 'Third choice'));
+    assert(html.includes('data-application-nav'));
+    assert.equal((html.match(/data-application-link=/g) || []).length, 6);
+    assert(html.includes('class="introduction-photo"'));
+    assert(html.includes('data-portrait-gallery'));
+    for (const pose of [1, 2, 3, 4]) assert(html.includes(`athallapose${pose}.`));
+    assert(!html.includes('data-portrait-prev') && !html.includes('data-portrait-next'));
+    assert(html.includes('data-portrait-play'));
+    assert(!html.includes('data-gallery-item='), 'No artwork cards until genuine work is supplied');
+    assert(!html.includes('class="desktop-nav"') && !html.includes('class="mobile-menu"'));
+    assert(html.includes('href="#biner"'));
+    assert(html.includes('id="sampling-panel-title"') && html.includes('id="biner-panel-title"'));
+    for (const title of locale === 'id' ? ['Kepedulian sosial', 'Kesadaran lingkungan', 'Kebersamaan', 'Mempersiapkan langkah berikutnya'] : ['Social awareness', 'Environmental awareness', 'Togetherness', 'Preparing for the next step']) assert(html.includes(title));
+    assert(html.includes('data-print'));
+});

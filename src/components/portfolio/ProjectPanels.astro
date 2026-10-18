@@ -1,0 +1,36 @@
+---
+import type { Locale, Project } from '../../types/portfolio';
+interface Props { lang: Locale; sections: NonNullable<Project['sections']>; }
+const { lang, sections } = Astro.props;
+---
+<div data-project-panels>
+  <nav class="project-tabs" aria-label={lang === 'id' ? 'Informasi proyek' : 'Project information'}>
+    {sections.map(section => <a href={`#${section.id}`} id={`tab-${section.id}`}>{section.title[lang]}</a>)}
+  </nav>
+  {sections.map((section, index) => <section class="card project-panel" id={section.id} aria-labelledby={`tab-${section.id}`}><span class="eyebrow">{String(index + 1).padStart(2, '0')}</span><div><h2>{section.title[lang]}</h2><p>{section.body[lang]}</p>{section.items && (section.ordered ? <ol class="project-steps">{section.items.map(item => <li><h3>{item.title[lang]}</h3><p>{item.body[lang]}</p></li>)}</ol> : <ul class="project-features">{section.items.map(item => <li>{item.icon && <span class="feature-icon" aria-hidden="true">{item.icon}</span>}<div><h3>{item.title[lang]}</h3><p>{item.body[lang]}</p></div></li>)}</ul>)}</div></section>)}
+</div>
+<script>
+document.querySelectorAll<HTMLElement>('[data-project-panels]').forEach(root => {
+    const nav = root.querySelector('nav')!;
+    const tabs = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.project-panel'));
+    nav.setAttribute('role', 'tablist');
+    const select = (index: number) => {
+        tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
+        panels.forEach((panel, i) => { panel.hidden = i !== index; });
+    };
+    tabs.forEach((tab, index) => {
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', panels[index].id);
+        panels[index].setAttribute('role', 'tabpanel');
+        panels[index].tabIndex = 0;
+        tab.addEventListener('click', event => { event.preventDefault(); select(index); });
+        tab.addEventListener('keydown', event => {
+            const target = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : event.key === 'ArrowRight' ? (index + 1) % tabs.length : event.key === 'ArrowLeft' ? (index - 1 + tabs.length) % tabs.length : null;
+            if (target === null) return;
+            event.preventDefault(); select(target); tabs[target].focus();
+        });
+    });
+    select(Math.max(0, panels.findIndex(panel => `#${panel.id}` === location.hash)));
+});
+</script>

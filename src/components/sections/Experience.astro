@@ -1,0 +1,64 @@
+---
+import { messages } from '../../i18n';
+import { experienceCategories, sortedExperiences } from '../../data/experiences';
+import AssetMark from '../ui/AssetMark.astro';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale; ready?: boolean };
+const t = messages[lang];
+const groups = experienceCategories.map(category => ({ category, items: sortedExperiences(category) }));
+const formatDate = (value: string) => value.length === 4 ? value : new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}-01T00:00:00Z`));
+const period = (item: ReturnType<typeof sortedExperiences>[number]) => !item.startDate ? t.present : `${formatDate(item.startDate)}${item.isCurrent ? `–${t.present}` : item.endDate ? `–${formatDate(item.endDate)}` : ''}`;
+---
+<section id="experience" class="section container">
+	<p class="section-label">03</p><h2>{t.nav.experience.toUpperCase()}</h2>
+	<nav class="experience-categories" aria-label={t.experienceCategories}>{groups.map(({ category, items }) => <a class="category-link" data-experience-nav={category} href={`#${category}`}>{t[category]} <span>{items.length}</span></a>)}</nav>
+	{groups.map(({ category, items }) => <div id={category} class="experience-group" data-experience-group>
+		<h3 class="experience-group-title">{t[category]}</h3>
+		{items.length ? items.map(item => <article class="card experience-card" id={`experience-${item.id}`}>
+			<div class="experience-card-header">
+				<AssetMark file={item.logo} monogram={item.monogram} alt={`${t.logo}: ${item.organization}`} />
+				<div class="experience-identity"><h4>{item.role[lang]}</h4><p>{item.organization}</p>{item.context && <small class="muted">{item.context}</small>}</div>
+				<div class="experience-meta"><span class="badge">{t[item.category]}</span><span class="experience-period">{period(item)}</span></div>
+			</div>
+			<details data-state-id={item.id}>
+				<summary aria-expanded="false"><span class="responsibilities-show">{t.responsibilities}</span><span class="responsibilities-hide">{t.hideResponsibilities}</span><svg class="experience-chevron" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg></summary>
+				<ul>{item.responsibilities[lang].map(point => <li>{point}</li>)}</ul>
+			</details>
+		</article>) : <p class="empty-state">{t.emptyExperience}</p>}
+	</div>)}
+</section>
+<style>
+	.experience-categories { display: inline-flex; flex-wrap: wrap; gap: 4px; max-width: 100%; padding: 6px; margin: 24px 0 28px; background: color-mix(in srgb, var(--raised) 75%, var(--background)); border: 1px solid var(--border); border-radius: 32px; }
+	.category-link { display: inline-flex; justify-content: center; align-items: center; gap: 8px; margin: 0; padding: 11px 20px; min-height: 44px; border: 1px solid transparent; border-radius: 28px; color: var(--muted); font-weight: 600; text-decoration: none; transition: background 180ms, color 180ms, box-shadow 180ms; }
+	.category-link span { padding: 0; background: transparent; color: inherit; font-size: .7rem; font-variant-numeric: tabular-nums; }
+	.category-link:hover { background: color-mix(in srgb, var(--surface) 65%, transparent); color: var(--primary); }
+	.category-link[aria-current] { background: var(--surface); color: var(--primary); border-color: var(--border); box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 10%, transparent); text-decoration: none; }
+	.experience-group + .experience-group { margin-top: 32px; }
+	.experience-group-title { margin-bottom: 16px; }
+	.experience-card { padding: 22px 24px; margin-top: 14px; }
+	.experience-card-header { display: flex; align-items: center; gap: 16px; }
+	.experience-identity { min-width: 0; flex: 1; }
+	.experience-identity h4 { margin: 0 0 6px; font-size: 1.12rem; overflow-wrap: anywhere; }
+	.experience-identity p { margin: 0; font-size: .88rem; }
+	.experience-meta { display: flex; flex-direction: column; gap: 8px; align-items: end; flex-shrink: 0; }
+	.experience-period { font-size: .78rem; color: var(--muted); }
+	details { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 6px; }
+	summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; padding: 10px 12px; margin-top: 6px; border-radius: 12px; background: var(--raised); color: var(--primary); font-size: .84rem; font-weight: 550; list-style: none; }
+	summary:hover { background: color-mix(in srgb, var(--primary) 12%, var(--raised)); }
+	summary::-webkit-details-marker { display: none; }
+	.responsibilities-hide, details[open] .responsibilities-show { display: none; }
+	details[open] .responsibilities-hide { display: inline; }
+	.experience-chevron { flex-shrink: 0; transition: transform 150ms; }
+	details[open] .experience-chevron { transform: rotate(180deg); }
+	ul { padding-left: 22px; margin: 12px 0 4px; color: var(--muted); font-size: .9rem; }
+	li + li { margin-top: 10px; }
+	@media (max-width: 767px) {
+		.experience-card { padding: 18px; }
+		.experience-card-header { flex-wrap: wrap; align-items: start; gap: 12px; }
+		.experience-identity { flex-basis: calc(100% - 68px); }
+		.experience-meta { width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+		.category-link { padding: 10px 12px; gap: 6px; }
+	}
+	@media (max-width: 360px) { .experience-categories { display: flex; padding: 4px; gap: 2px; } .category-link { flex: 1; padding: 10px 7px; font-size: .72rem; gap: 4px; } }
+	@media (prefers-reduced-motion: reduce) { .experience-chevron { transition: none; } }
+</style>

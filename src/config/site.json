@@ -1,0 +1,16 @@
+{
+    "name": "Athalla Reinaldi",
+    "publicEmail": "athalla.reinaldi@gmail.com",
+    "publicWhatsApp": "6281807070249",
+    "socialUrls": {
+        "Instagram": "https://www.instagram.com/atala.re/",
+        "LinkedIn": "https://www.linkedin.com/in/athalla-reinaldi"
+    },
+    "portrait": "src/assets/images/profile/athalla-portrait.png",
+    "cvAssets": {
+        "id": "documents/cv/CV Athalla Reinaldi.pdf",
+        "en": "documents/cv/CV Athalla Reinaldi.pdf"
+    },
+    "cvLanguage": "ID–EN",
+    "readyForPublication": false
+}

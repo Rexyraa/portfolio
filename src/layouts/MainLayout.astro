@@ -1,0 +1,50 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/typography.css';
+import '../styles/accents.css';
+import '../styles/controls.css';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/portfolio/Footer.astro';
+import { site } from '../config/site';
+import { messages } from '../i18n';
+import { path } from '../utils/paths';
+import type { Locale } from '../types/portfolio';
+interface Props { lang: Locale; title?: string; description?: string; }
+const { lang, title = site.name, description = messages[lang].bio } = Astro.props;
+const t = messages[lang];
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} · {t.eyebrow}</title>
+    <meta name="description" content={description} />
+    {!site.readyForPublication && <meta name="robots" content="noindex, nofollow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {Astro.site && ['id', 'en'].map(locale => <link rel="alternate" hreflang={locale} href={new URL(Astro.url.pathname.replace(/\/(id|en)(\/|$)/, `/${locale}$2`), Astro.site)} />)}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/png" href={path('ar.png')} />
+    <link rel="apple-touch-icon" href={path('ar.png')} />
+    <script is:inline>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('portfolio.theme'); } catch {}
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.add('js');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.skip}</a>
+    <Header lang={lang} />
+    <main id="main"><slot /></main>
+    <Footer lang={lang} />
+    <script>import '../scripts/site';</script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+---
+import { magang } from '../../data/magang';
+import { path } from '../../utils/paths';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const content = magang[lang];
+---
+<aside class="container magang-card" aria-labelledby="magang-card-title">
+    <div class="card">
+        <div><h2 id="magang-card-title">{content.title}</h2><p>{content.description}</p></div>
+        <a class="button primary" href={path(`${lang}/magang/`)}>{content.readMore}<span aria-hidden="true">↗</span></a>
+    </div>
+</aside>
+<style>
+    .magang-card { margin-bottom: 64px; }
+    .card { display: flex; align-items: center; gap: 32px; justify-content: space-between; background: linear-gradient(125deg, var(--surface), var(--raised)); }
+    h2 { font-size: clamp(1.3rem, 2vw, 1.7rem); max-width: none; margin: 0 0 10px; }
+    p { margin: 0; font-size: .93rem; max-width: 62ch; }
+    a { flex-shrink: 0; }
+    @media (max-width: 767px) { .card { align-items: start; flex-direction: column; gap: 22px; } .magang-card { margin-bottom: 48px; } a { max-width: 100%; } }
+</style>

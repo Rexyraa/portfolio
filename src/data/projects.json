@@ -1,0 +1,576 @@
+[
+    {
+        "slug": "mudahnulis",
+        "cover": "src/assets/images/projects/mudahnulis/mudahnulissampul.png",
+        "category": "personal",
+        "published": true,
+        "detailMode": "preview",
+        "title": {
+            "id": "MudahNulis",
+            "en": "MudahNulis"
+        },
+        "kind": {
+            "id": "Aplikasi full-stack",
+            "en": "Full-stack application"
+        },
+        "status": {
+            "id": "Dalam pengembangan",
+            "en": "In development"
+        },
+        "summary": {
+            "id": "MudahNulis adalah ruang kerja penulisan akademik yang memadukan rekomendasi judul, penyusunan kerangka, penyuntingan draf, dan pencarian referensi dalam satu tempat. Generasi teks menggunakan model AI lokal melalui Ollama, sedangkan pencarian referensi memanfaatkan OpenAlex.",
+            "en": "MudahNulis is an academic writing workspace that brings title recommendations, outlining, draft editing, and reference discovery into one place. Text generation runs through a local AI model using Ollama, while reference discovery uses OpenAlex."
+        },
+        "tags": [
+            "React",
+            "TypeScript",
+            "FastAPI",
+            "Ollama"
+        ],
+        "stack": [
+            "React",
+            "TypeScript",
+            "FastAPI",
+            "Ollama",
+            "SQLite",
+            "OpenAlex"
+        ],
+        "sections": [
+            {
+                "id": "overview",
+                "title": {
+                    "id": "Preview proyek",
+                    "en": "Project preview"
+                },
+                "body": {
+                    "id": "Ruang kerja penulisan akademik untuk menyusun arah penelitian, mengembangkan draf per subbab, dan menemukan referensi. MudahNulis masih berupa MVP untuk pengembangan lokal; screenshot di atas menampilkan versi pengembangan.",
+                    "en": "An academic writing workspace for shaping research, developing subsection drafts, and discovering references. MudahNulis is a functional MVP for local development; the screenshots above show the development version."
+                }
+            },
+            {
+                "id": "workflow",
+                "title": {
+                    "id": "Cara kerja",
+                    "en": "How it works"
+                },
+                "body": {
+                    "id": "Masukkan metadata penelitian → pilih rekomendasi judul → buat kerangka lima bab → tulis dan sunting setiap subbab. Cari referensi melalui OpenAlex, tinjau sumbernya, lalu ekspor naskah menggunakan dialog cetak PDF browser.",
+                    "en": "Enter research metadata → choose a recommended title → generate a five-chapter outline → write and edit each subsection. Discover references through OpenAlex, review the sources, then export the manuscript through the browser’s PDF print dialog."
+                }
+            },
+            {
+                "id": "features",
+                "title": {
+                    "id": "Fitur utama",
+                    "en": "Key features"
+                },
+                "body": {
+                    "id": "Rekomendasi judul dan kerangka, editor per subbab, penyempurnaan tulisan, asisten AI mengambang, pencarian serta penyisipan sitasi, dan ekspor PDF. Pemeriksaan naskah memakai heuristik untuk saran penulisan, bukan pendeteksi plagiarisme atau penilaian orisinalitas tervalidasi.",
+                    "en": "Title and outline recommendations, subsection editing, writing refinement, a floating AI assistant, citation discovery and insertion, and PDF export. Manuscript checks use writing heuristics—not plagiarism detection or validated originality assessment."
+                }
+            },
+            {
+                "id": "implementation",
+                "title": {
+                    "id": "Implementasi",
+                    "en": "Implementation"
+                },
+                "body": {
+                    "id": "React dan TypeScript untuk antarmuka; FastAPI untuk API; SQLite untuk metadata dan penyimpanan lokal. Ollama menjalankan generasi teks secara lokal, sedangkan OpenAlex menyediakan metadata referensi melalui layanan eksternal. Pemeriksaan draf memakai debounce 700 ms dan perlindungan respons usang; PDF menggunakan CSS cetak native.",
+                    "en": "React and TypeScript power the interface, FastAPI serves the API, and SQLite stores local metadata. Ollama runs text generation locally, while OpenAlex supplies reference metadata through an external service. Draft checks use a 700 ms debounce and stale-response protection; PDF export uses native print CSS."
+                }
+            }
+        ],
+        "gallery": [
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnuliscover (1).png",
+                "alt": {
+                    "id": "Tampilan utama MudahNulis versi pengembangan",
+                    "en": "MudahNulis development version overview"
+                },
+                "order": 0,
+                "cover": true
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview1.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 1",
+                    "en": "MudahNulis preview screenshot 1"
+                },
+                "order": 1
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview2.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 2",
+                    "en": "MudahNulis preview screenshot 2"
+                },
+                "order": 2
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview3.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 3",
+                    "en": "MudahNulis preview screenshot 3"
+                },
+                "order": 3
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview4.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 4",
+                    "en": "MudahNulis preview screenshot 4"
+                },
+                "order": 4
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview5.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 5",
+                    "en": "MudahNulis preview screenshot 5"
+                },
+                "order": 5
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview6.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 6",
+                    "en": "MudahNulis preview screenshot 6"
+                },
+                "order": 6
+            },
+            {
+                "path": "src/assets/images/projects/mudahnulis/mudahnulispreview7.png",
+                "alt": {
+                    "id": "Screenshot preview MudahNulis 7",
+                    "en": "MudahNulis preview screenshot 7"
+                },
+                "order": 7
+            }
+        ],
+        "artifacts": []
+    },
+    {
+        "slug": "idx-stock-screener",
+        "category": "personal",
+        "published": true,
+        "detailMode": "overview",
+        "title": {
+            "id": "IDX Stock Screener",
+            "en": "IDX Stock Screener"
+        },
+        "kind": {
+            "id": "Analitik Data / Aplikasi Web",
+            "en": "Data Analytics / Web Application"
+        },
+        "status": {
+            "id": "Demo publik tersedia",
+            "en": "Public demo available"
+        },
+        "summary": {
+            "id": "Aplikasi web untuk mengeksplorasi dan menyaring saham Bursa Efek Indonesia berdasarkan momentum harga dan likuiditas. Menggunakan data pasar nyata dari Yahoo Finance, dengan dashboard interaktif, rincian saham, dan transparansi metode perhitungan.",
+            "en": "A web application for exploring and screening Indonesian stocks based on price momentum and liquidity. It uses real market data from Yahoo Finance, with an interactive dashboard, stock details, and transparent calculation methods."
+        },
+        "tags": [
+            "Python",
+            "pandas",
+            "FastAPI",
+            "JavaScript"
+        ],
+        "stack": [
+            "Python",
+            "pandas",
+            "NumPy",
+            "yfinance",
+            "FastAPI",
+            "Jinja2",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Canvas",
+            "GitHub Actions",
+            "GitHub Pages"
+        ],
+        "demoUrl": "https://rexyraa.github.io/idx-screener/",
+        "githubUrl": "https://github.com/Rexyraa/idx-screener",
+        "sections": [
+            {
+                "id": "overview",
+                "title": {
+                    "id": "Ringkasan",
+                    "en": "Overview"
+                },
+                "body": {
+                    "id": "Riset personal untuk mengeksplorasi momentum harga dan likuiditas saham Indonesia.",
+                    "en": "A personal research project exploring price momentum and liquidity in Indonesian stocks."
+                },
+                "items": [
+                    {
+                        "icon": "⌕",
+                        "title": {
+                            "id": "Eksplorasi saham",
+                            "en": "Explore stocks"
+                        },
+                        "body": {
+                            "id": "Data Python disajikan dalam dashboard untuk mencari, menyaring, dan menelusuri metrik saham.",
+                            "en": "Python-processed data feeds a dashboard for searching, filtering, and inspecting stock metrics."
+                        }
+                    },
+                    {
+                        "icon": "◎",
+                        "title": {
+                            "id": "Snapshot, bukan real-time",
+                            "en": "Snapshots, not real-time"
+                        },
+                        "body": {
+                            "id": "Demo publik menyajikan hasil screening. Data diambil dan dihitung saat build, bukan setiap kunjungan.",
+                            "en": "The public demo serves screening results. Data retrieval and calculations run at build time, not on each visit."
+                        }
+                    },
+                    {
+                        "icon": "◇",
+                        "title": {
+                            "id": "Untuk eksplorasi data",
+                            "en": "For data exploration"
+                        },
+                        "body": {
+                            "id": "Bukan rekomendasi investasi, probabilitas keberhasilan, atau prediksi harga.",
+                            "en": "Not investment advice, success probabilities, or price predictions."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "workflow",
+                "title": {
+                    "id": "Cara kerja",
+                    "en": "How it works"
+                },
+                "body": {
+                    "id": "227 ticker adalah ukuran daftar masukan, bukan jumlah saham yang selalu lolos atau seluruh saham aktif BEI.",
+                    "en": "227 tickers is the input list size—not the number that always qualifies or the entire active IDX universe."
+                },
+                "ordered": true,
+                "items": [
+                    {
+                        "title": {
+                            "id": "Pengambilan data",
+                            "en": "Data retrieval"
+                        },
+                        "body": {
+                            "id": "Mengunduh riwayat harga dan volume harian enam bulan dari Yahoo Finance melalui yfinance untuk subset 227 ticker BEI.",
+                            "en": "Download six months of daily prices and volume from Yahoo Finance through yfinance for a 227-ticker IDX subset."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Validasi data",
+                            "en": "Data validation"
+                        },
+                        "body": {
+                            "id": "Memeriksa harga positif dan valid, volume tidak negatif, serta minimal 61 sesi perdagangan. Kegagalan per ticker dicatat tanpa menghentikan seluruh screening.",
+                            "en": "Check valid positive prices, non-negative volume, and at least 61 trading sessions. Record per-ticker failures without stopping the entire screening run."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Penyaringan likuiditas",
+                            "en": "Liquidity screening"
+                        },
+                        "body": {
+                            "id": "Memerlukan data pada sesi terbaru dalam hasil unduhan, volume positif, dan rata-rata nilai transaksi 20 sesi minimal Rp1 miliar per hari.",
+                            "en": "Require data for the latest session in the download, positive volume, and a 20-session average traded value of at least IDR 1 billion per day."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Perhitungan momentum",
+                            "en": "Momentum calculation"
+                        },
+                        "body": {
+                            "id": "Menghitung return harga tersesuaikan 21 dan 60 sesi. Kedua return diubah menjadi peringkat persentil, lalu dirata-ratakan menjadi skor momentum 0–100.",
+                            "en": "Calculate 21- and 60-session adjusted-price returns, convert both into percentile ranks, and average them into a 0–100 momentum score."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Penyajian snapshot",
+                            "en": "Snapshot presentation"
+                        },
+                        "body": {
+                            "id": "Menyajikan hasil melalui dashboard, tabel interaktif, grafik, dan halaman detail saham.",
+                            "en": "Present results through a dashboard, interactive tables, charts, and stock detail pages."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "features",
+                "title": {
+                    "id": "Fitur utama",
+                    "en": "Key features"
+                },
+                "body": {
+                    "id": "Eksplorasi snapshot pasar dengan metode yang dapat ditelusuri.",
+                    "en": "Explore a market snapshot with traceable methods."
+                },
+                "items": [
+                    {
+                        "icon": "↗",
+                        "title": {
+                            "id": "Data pasar nyata",
+                            "en": "Real Market Data"
+                        },
+                        "body": {
+                            "id": "Harga nyata tanpa fallback sintetis.",
+                            "en": "Real prices without synthetic fallback data."
+                        }
+                    },
+                    {
+                        "icon": "≋",
+                        "title": {
+                            "id": "Peringkat momentum",
+                            "en": "Momentum Ranking"
+                        },
+                        "body": {
+                            "id": "Ranking relatif berdasarkan return 21 dan 60 sesi.",
+                            "en": "Relative ranking based on 21- and 60-session returns."
+                        }
+                    },
+                    {
+                        "icon": "◇",
+                        "title": {
+                            "id": "Penyaringan likuiditas",
+                            "en": "Liquidity Screening"
+                        },
+                        "body": {
+                            "id": "Filter berdasarkan rata-rata nilai transaksi.",
+                            "en": "Screen by average traded value."
+                        }
+                    },
+                    {
+                        "icon": "⌕",
+                        "title": {
+                            "id": "Screener interaktif",
+                            "en": "Interactive Screener"
+                        },
+                        "body": {
+                            "id": "Pencarian, filter sektor, skor minimum, dan pengurutan.",
+                            "en": "Search, sector filters, minimum score, and sorting."
+                        }
+                    },
+                    {
+                        "icon": "⌁",
+                        "title": {
+                            "id": "Detail saham",
+                            "en": "Stock Detail"
+                        },
+                        "body": {
+                            "id": "Grafik harga, return historis, volatilitas tahunan, dan likuiditas.",
+                            "en": "Price charts, historical returns, annualized volatility, and liquidity."
+                        }
+                    },
+                    {
+                        "icon": "◎",
+                        "title": {
+                            "id": "Transparansi data",
+                            "en": "Data Transparency"
+                        },
+                        "body": {
+                            "id": "Tanggal pasar, kualitas data, kegagalan ticker, dan metode.",
+                            "en": "Market dates, data quality, ticker failures, and methodology."
+                        }
+                    },
+                    {
+                        "icon": "↓",
+                        "title": {
+                            "id": "Ekspor CSV",
+                            "en": "CSV Export"
+                        },
+                        "body": {
+                            "id": "Unduhan seluruh snapshot hasil screening.",
+                            "en": "Download the complete screening snapshot."
+                        }
+                    },
+                    {
+                        "icon": "◐",
+                        "title": {
+                            "id": "Tema terang dan gelap",
+                            "en": "Light & Dark Mode"
+                        },
+                        "body": {
+                            "id": "Pilihan tema tersimpan di browser.",
+                            "en": "Theme preferences saved in the browser."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "implementation",
+                "title": {
+                    "id": "Implementasi",
+                    "en": "Implementation"
+                },
+                "body": {
+                    "id": "Versi lokal mendukung screening latar belakang dan API Python. Demo GitHub Pages bersifat read-only dan tidak menjalankan FastAPI atau refresh pasar langsung untuk pengunjung.",
+                    "en": "The local version supports background screening and Python APIs. The GitHub Pages demo is read-only: it does not run FastAPI or trigger live market refreshes for visitors."
+                },
+                "items": [
+                    {
+                        "title": {
+                            "id": "Pengolahan data",
+                            "en": "Data processing"
+                        },
+                        "body": {
+                            "id": "Python, pandas, dan NumPy mengolah data serta kalkulasi; yfinance mengambil data Yahoo Finance.",
+                            "en": "Python, pandas, and NumPy handle data processing and calculations; yfinance retrieves Yahoo Finance data."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Aplikasi lokal",
+                            "en": "Local application"
+                        },
+                        "body": {
+                            "id": "FastAPI dan Jinja2 menyediakan aplikasi serta API lokal. Kegagalan refresh mempertahankan snapshot sebelumnya.",
+                            "en": "FastAPI and Jinja2 provide the local application and APIs. A failed refresh preserves the previous snapshot."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Antarmuka browser",
+                            "en": "Browser interface"
+                        },
+                        "body": {
+                            "id": "HTML, CSS, JavaScript, dan Canvas menyajikan antarmuka serta grafik. Filter, sorting, grafik, tema, dan ekspor CSV berjalan di browser.",
+                            "en": "HTML, CSS, JavaScript, and Canvas power the interface and charts. Filtering, sorting, charts, themes, and CSV export run in the browser."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Build dan hosting snapshot",
+                            "en": "Snapshot build and hosting"
+                        },
+                        "body": {
+                            "id": "GitHub Actions menjalankan screening dan build demo statis; GitHub Pages menghosting HTML/JSON. Snapshot diperbarui melalui push atau workflow manual, bukan permintaan pengunjung. Kegagalan build mempertahankan deployment sebelumnya.",
+                            "en": "GitHub Actions runs screening and the static demo build; GitHub Pages hosts HTML/JSON. Pushes or manually triggered workflows update the snapshot—not visitor requests. Failed builds preserve the previous deployment."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "limitations",
+                "title": {
+                    "id": "Keterbatasan",
+                    "en": "Limitations"
+                },
+                "body": {
+                    "id": "Hasil perlu ditafsirkan sesuai cakupan dan keterbatasan sumber datanya.",
+                    "en": "Interpret results within the scope and limitations of the source data."
+                },
+                "items": [
+                    {
+                        "title": {
+                            "id": "Bukan CAQS lengkap",
+                            "en": "Not full CAQS"
+                        },
+                        "body": {
+                            "id": "Skor merupakan ranking momentum, bukan CAQS multi-faktor lengkap.",
+                            "en": "The score is a momentum ranking, not a complete multi-factor CAQS model."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Bukan rekomendasi investasi",
+                            "en": "Not investment advice"
+                        },
+                        "body": {
+                            "id": "Skor bukan probabilitas keberhasilan, prediksi harga, atau rekomendasi investasi.",
+                            "en": "Scores are not success probabilities, price predictions, or investment recommendations."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Cakupan terbatas",
+                            "en": "Limited coverage"
+                        },
+                        "body": {
+                            "id": "Universe 227 ticker belum mewakili seluruh saham aktif BEI.",
+                            "en": "The 227-ticker universe does not cover all active IDX stocks."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Keterbatasan penyedia data",
+                            "en": "Provider limitations"
+                        },
+                        "body": {
+                            "id": "Data Yahoo Finance dapat terlambat atau tidak akurat.",
+                            "en": "Yahoo Finance data may be delayed or inaccurate."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Riset lanjutan",
+                            "en": "Further research"
+                        },
+                        "body": {
+                            "id": "Fundamental dan backtest portofolio belum diintegrasikan.",
+                            "en": "Fundamentals and portfolio backtesting are not integrated."
+                        }
+                    },
+                    {
+                        "title": {
+                            "id": "Verifikasi metadata",
+                            "en": "Metadata verification"
+                        },
+                        "body": {
+                            "id": "Nama, sektor, papan pencatatan, dan status listing memerlukan verifikasi.",
+                            "en": "Names, sectors, listing boards, and listing status require verification."
+                        }
+                    }
+                ]
+            }
+        ],
+        "cover": "src/assets/images/projects/idx-stock-screener/idx-screener-dashboard.png",
+        "gallery": [
+            {
+                "path": "src/assets/images/projects/idx-stock-screener/idx-preview1.png",
+                "alt": {
+                    "id": "Dashboard IDX Stock Screener dalam tema gelap",
+                    "en": "IDX Stock Screener dashboard in dark mode"
+                },
+                "caption": {
+                    "id": "Snapshot dashboard demo publik; data bukan real-time atau rekomendasi investasi.",
+                    "en": "Public demo dashboard snapshot; not real-time data or investment advice."
+                },
+                "order": 0
+            },
+            {
+                "path": "src/assets/images/projects/idx-stock-screener/idx-preview2.png",
+                "alt": {
+                    "id": "Preview kedua antarmuka IDX Stock Screener",
+                    "en": "Second IDX Stock Screener interface preview"
+                },
+                "caption": {
+                    "id": "Preview demo read-only IDX Stock Screener, bukan rekomendasi saham.",
+                    "en": "IDX Stock Screener read-only demo preview, not a stock recommendation."
+                },
+                "order": 1
+            },
+            {
+                "path": "src/assets/images/projects/idx-stock-screener/idx-preview3.png",
+                "alt": {
+                    "id": "Preview ketiga antarmuka IDX Stock Screener",
+                    "en": "Third IDX Stock Screener interface preview"
+                },
+                "caption": {
+                    "id": "Preview demo publik IDX Stock Screener.",
+                    "en": "IDX Stock Screener public demo preview."
+                },
+                "order": 2
+            }
+        ],
+        "artifacts": []
+    }
+]

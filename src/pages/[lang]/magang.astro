@@ -1,0 +1,177 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import BackgroundAccent from '../../components/ui/BackgroundAccent.astro';
+import { magang, applicationVisuals, bureauPanels } from '../../data/magang';
+import CreativeGallery from '../../components/portfolio/CreativeGallery.astro';
+import PortraitGallery from '../../components/portfolio/PortraitGallery.astro';
+import { locales } from '../../i18n';
+import { path } from '../../utils/paths';
+import type { Locale } from '../../types/portfolio';
+export function getStaticPaths() { return locales.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Locale;
+const content = magang[lang];
+const visual = applicationVisuals[lang];
+const panels = bureauPanels[lang];
+const navigation = content.sections.map(section => ({ id: section.id, label: section.id === 'consideration' ? visual.about : section.id === 'another-side' ? visual.creativity : section.nav }));
+---
+<MainLayout lang={lang} title={content.title} description={content.description}>
+    <article class="application" data-magang>
+        <nav class="application-nav" aria-label={content.navigation} data-application-nav><div class="application-width">{navigation.map(item => <a href={`#${item.id}`} data-application-link={item.id}>{item.label}</a>)}</div></nav>
+        <header class="application-intro">
+            <BackgroundAccent />
+            <div class="application-width">
+                <p class="eyebrow">{content.title}</p>
+                <h1>Athalla Reinaldi</h1>
+                <p class="application-identity">{content.identity}</p>
+                <div class="actions application-actions"><a class="button secondary" href={`${path(`${lang}/`)}#about`}>← {content.back}</a><button hidden data-print class="button primary" type="button">{content.print}</button></div>
+            </div>
+        </header>
+        <div class="application-width application-body">
+            <section id="bureaus" class="bureau-selection" aria-labelledby="bureaus-title">
+                <h2 id="bureaus-title">{content.bureaus}</h2>
+                <ol class="bureau-pills">
+                    <li><a href="#variansi"><small>{content.firstChoice}</small><strong>Variansi</strong></a></li>
+                    <li><a href="#sampling"><small>{content.secondChoice}</small><strong>Sampling</strong></a></li>
+                    <li><a href="#biner"><small>{content.thirdChoice}</small><strong>Biner</strong></a></li>
+                </ol>
+            </section>
+            {content.sections.map(section => <section id={section.id} class="application-section" aria-labelledby={`${section.id}-title`}>
+                {section.id === 'variansi' && <BackgroundAccent />}
+                <div class="section-layout">
+                    <div class="section-copy"><span class="section-index" aria-hidden="true">0{content.sections.indexOf(section) + 1}</span><h2 id={`${section.id}-title`}>{section.title}</h2>{section.paragraphs.map(paragraph => <p class="narrative-paragraph">{paragraph}</p>)}</div>
+                    {section.id === 'introduction' && <PortraitGallery lang={lang} />}
+                    {section.id === 'variansi' && <aside class="learning-panel" aria-label={visual.learning}><p class="eyebrow">{visual.learning}</p><ol>{visual.interests.map((interest, index) => <li><span class="learning-number">0{index + 1}</span><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">{index === 0 ? <><circle cx="10" cy="10" r="6" /><path d="m15 15 6 6" /></> : index === 1 ? <><path d="M4 20V10m8 10V4m8 16v-7M2 20h20" /></> : <><rect x="3" y="4" width="18" height="13" rx="2" /><path d="m8 22 4-5 4 5M7 9h10M7 12h6" /></>}</svg><strong>{interest}</strong></li>)}</ol></aside>}
+                    {section.id === 'sampling' && <aside class="learning-panel sampling-panel" aria-labelledby="sampling-panel-title">
+                        <h3 id="sampling-panel-title">{panels.sampling.title}</h3><p>{panels.sampling.intro}</p>
+                        <ul class="panel-topics">{panels.sampling.items.map((item, index) => <li><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">{index === 0 ? <><path d="M12 20S3 14 3 8a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-9 12-9 12Z" /></> : index === 1 ? <><path d="M20 3C7 2 2 8 6 15s14 2 14-12ZM4 21 16 8" /></> : <><circle cx="8" cy="7" r="3" /><circle cx="17" cy="8" r="2" /><path d="M2 21v-3a6 6 0 0 1 12 0v3m2-7a5 5 0 0 1 6 5v2" /></>}</svg><div><strong>{item.title}</strong><p>{item.description}</p></div></li>)}</ul>
+                    </aside>}
+                    {section.id === 'biner' && <aside class="learning-panel biner-panel" aria-labelledby="biner-panel-title"><h3 id="biner-panel-title">{panels.biner.title}</h3><ul class="panel-topics">{panels.biner.items.map((item, index) => <li><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">{index === 0 ? <><path d="M3 21V5h12v16M7 9h4m-4 4h4m4-2h6v10M2 21h20" /></> : index === 1 ? <><circle cx="12" cy="7" r="3" /><path d="M5 21v-3a7 7 0 0 1 14 0v3M2 5h3m14 0h3" /></> : <><rect x="3" y="7" width="18" height="14" rx="2" /><path d="M8 7V3h8v4M3 12h18m-9-2v4" /></>}</svg><strong>{item}</strong></li>)}</ul></aside>}
+                </div>
+                {section.id === 'another-side' && <CreativeGallery lang={lang} />}
+            </section>)}
+            <aside class="application-evidence" aria-label={content.evidence}><a href={`${path(`${lang}/`)}#volunteer`}>{content.evidenceLink} <span aria-hidden="true">↗</span></a></aside>
+        </div>
+    </article>
+</MainLayout>
+<script>
+    const application = document.querySelector<HTMLElement>('[data-magang]');
+    const nav = document.querySelector<HTMLElement>('[data-application-nav]');
+    const header = document.querySelector<HTMLElement>('body > .header');
+    if (application && nav && header) {
+        let observer: IntersectionObserver;
+        const sections = Array.from(application.querySelectorAll<HTMLElement>('.application-section'));
+        const links = application.querySelectorAll<HTMLAnchorElement>('[data-application-link]');
+        const update = () => {
+            const offset = header.offsetHeight + nav.offsetHeight + 24;
+            const active = sections.findLast(section => section.getBoundingClientRect().top <= offset + 2) || sections[0];
+            links.forEach(link => {
+                if (link.dataset.applicationLink === active?.id) link.setAttribute('aria-current', 'location');
+                else link.removeAttribute('aria-current');
+            });
+        };
+        const resize = () => {
+            const offset = header.offsetHeight + nav.offsetHeight;
+            application.style.setProperty('--application-header', `${header.offsetHeight}px`);
+            application.style.setProperty('--application-offset', `${offset + 24}px`);
+            observer?.disconnect();
+            observer = new IntersectionObserver(update, { rootMargin: `-${offset}px 0px -50% 0px`, threshold: [0, .25, .5, .75, 1] });
+            sections.forEach(section => observer.observe(section));
+            update();
+        };
+        new ResizeObserver(resize).observe(header);
+        new ResizeObserver(resize).observe(nav);
+        resize();
+    }
+    const button = document.querySelector<HTMLButtonElement>('[data-print]');
+    if (button) {
+        button.hidden = false;
+        button.addEventListener('click', () => window.print());
+    }
+</script>
+<style>
+    .application { --application-header: 80px; --application-offset: 168px; }
+    .application-width { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .application-intro { position: relative; isolation: isolate; overflow: clip; padding-block: 72px 56px; background: linear-gradient(125deg, var(--background), var(--raised)); }
+    h1 { font-size: clamp(2.3rem, 5vw, 3.8rem); margin-top: 20px; }
+    .application-identity { font-size: 1.08rem; }
+    .application-actions { margin-top: 28px; }
+    .bureau-selection { padding-top: 36px; }
+    .bureau-selection h2 { font-size: 1.35rem; max-width: none; }
+    .bureau-pills { display: flex; flex-wrap: wrap; list-style: none; gap: 6px; padding: 6px; margin: 20px 0 0; background: var(--raised); border: 1px solid var(--border); border-radius: 32px; }
+    .bureau-pills li { flex: 1; min-width: 130px; }
+    .bureau-pills a, .bureau-pills li > span { display: flex; flex-direction: column; justify-content: center; min-height: 64px; padding: 10px 20px; border-radius: 28px; text-decoration: none; }
+    .bureau-pills a { background: var(--surface); color: var(--primary); box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 8%, transparent); }
+    .bureau-pills a:hover { background: color-mix(in srgb, var(--primary) 10%, var(--surface)); }
+    .bureau-pills small { color: var(--muted); font-size: .72rem; }
+    .bureau-pills strong { font-size: .95rem; }
+    .application-body { padding-bottom: 80px; }
+    .application-nav { position: sticky; top: var(--application-header); z-index: 15; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .application-nav > div { display: flex; gap: 24px; overflow-x: auto; padding-block: 8px; scrollbar-width: thin; }
+    .application-nav a { display: inline-flex; flex-shrink: 0; align-items: center; min-height: 44px; font-size: .85rem; text-decoration: none; border-bottom: 3px solid transparent; color: var(--muted); }
+    .application-nav a[aria-current] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 650; }
+    .application-nav a:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; border-radius: 6px; }
+    .application-section { position: relative; isolation: isolate; padding: 56px 24px; margin-inline: -24px; border-radius: 20px; scroll-margin-top: calc(var(--application-offset) - 100px); }
+    .application-section:nth-of-type(even) { background: linear-gradient(125deg, var(--surface), var(--raised)); }
+    .section-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .9fr); gap: 48px; align-items: center; }
+    .section-copy { min-width: 0; }
+    #sampling .sampling-panel { grid-column: 1; grid-row: 1; }
+    #sampling .section-copy { grid-column: 2; }
+    #consideration .section-layout, #another-side .section-layout { display: block; max-width: 68ch; margin-inline: auto; }
+    .section-index { display: flex; align-items: center; gap: 12px; font-size: .75rem; color: var(--accent); margin-bottom: 20px; }
+    .section-index::after { content: ''; width: 40px; height: 2px; background: var(--accent); }
+    .introduction-photo { margin: 0; padding: 12px; border: 1px solid var(--border); background: var(--surface); border-radius: 24px; }
+    .introduction-photo img { width: 100%; height: auto; max-height: 520px; object-fit: contain; border-radius: 16px; }
+    .learning-panel { margin: 0; padding: 32px; border: 1px solid var(--border); border-radius: 22px; background: var(--surface); }
+    .learning-panel ol { padding: 0; list-style: none; margin: 24px 0 0; }
+    .learning-panel li { display: flex; align-items: center; gap: 12px; padding: 22px 0; color: var(--primary); }
+    .learning-panel li + li { border-top: 1px solid var(--border); }
+    .learning-number { font-size: .7rem; color: var(--muted); }
+    .learning-panel strong { font-size: .95rem; }
+    .panel-topics { list-style: none; padding: 0; margin: 24px 0 0; }
+    .panel-topics li { align-items: flex-start; padding: 18px 0; }
+    .panel-topics svg { flex-shrink: 0; }
+    .application-section .panel-topics p { font-size: .88rem; line-height: 1.65; margin: 8px 0 0; }
+    .application-section .sampling-panel > p { font-size: .94rem; line-height: 1.75; }
+    .application-section h2 { font-size: clamp(1.55rem, 3vw, 2rem); max-width: none; line-height: 1.3; }
+    .application-section p { font-size: 1.04rem; line-height: 1.9; max-width: 70ch; }
+    .application-section p + p { margin-top: 20px; }
+    .application-evidence { border-top: 1px solid var(--border); margin-top: 40px; padding-top: 24px; font-size: .9rem; }
+    @media (max-width: 767px) {
+        .application { --application-header: 68px; --application-offset: 152px; }
+        .application-intro { padding-block: 48px 36px; }
+        .application-section { padding: 36px 0; margin-inline: 0; }
+        .application-section:nth-of-type(even) { padding-inline: 16px; }
+        .section-layout { grid-template-columns: 1fr; gap: 24px; }
+        #sampling .sampling-panel, #sampling .section-copy { grid-column: auto; grid-row: auto; }
+        .application-section p { font-size: 1rem; }
+        .application-actions { align-items: stretch; flex-direction: column; }
+        .application-nav > div { gap: 20px; }
+    }
+    @page { size: A4; margin: 18mm; }
+    @media print {
+        :global(html:has([data-magang])), :global(html:has([data-magang]) body) { background: #fff !important; color: #111 !important; color-scheme: light; font-size: 10.5pt; }
+        :global(body:has([data-magang]) > .header), :global(body:has([data-magang]) > .footer), :global(body:has([data-magang]) > .skip), :global([data-magang] .background-accent) { display: none !important; }
+        .application-nav, .application-actions { display: none !important; }
+        .application-width { width: 100%; max-width: none; }
+        .application-intro { background: #fff !important; padding: 0 0 6mm; overflow: visible; }
+        .application-body { padding: 0; }
+        .application-section { padding-top: 6mm; scroll-margin: 0; }
+        .application-section { padding: 6mm 0 0; margin: 0; border-radius: 0; background: #fff !important; }
+        .section-layout { display: block; }
+        .introduction-photo { display: none; }
+        .learning-panel { margin-top: 4mm; padding: 4mm; break-inside: avoid; background: #fff; color: #111; }
+        .learning-panel li { padding: 2mm 0; color: #111; }
+        .section-index, .learning-panel strong, .learning-panel svg { color: #111; }
+        .application-section h2 { font-size: 15pt; margin-bottom: 3mm; break-after: avoid-page; page-break-after: avoid; }
+        h1 { font-size: 26pt; }
+        .application-section p, .application-identity { font-size: 10.5pt; line-height: 1.55; orphans: 3; widows: 3; }
+        .application-section p + p { margin-top: 3mm; }
+        .bureau-selection { padding-top: 5mm; }
+        .bureau-pills { background: #fff; border-color: #bbb; margin-top: 3mm; padding: 0; }
+        .bureau-pills a, .bureau-pills li > span { background: #fff; padding: 3mm; }
+        .bureau-pills small, .bureau-pills strong { color: #111; }
+        .application-evidence { margin-top: 6mm; padding-top: 4mm; break-inside: avoid; }
+        :global([data-magang] p), :global([data-magang] a), :global([data-magang] dt), :global([data-magang] dd) { color: #111 !important; }
+        :global([data-magang] *) { box-shadow: none !important; text-shadow: none !important; }
+    }
+</style>

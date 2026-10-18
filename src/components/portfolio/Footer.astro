@@ -1,0 +1,9 @@
+---
+import { messages } from '../../i18n';
+import { site } from '../../config/site';
+import { path } from '../../utils/paths';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = messages[lang];
+---
+<footer class="footer"><div class="container footer-inner"><span>© <span data-year>{new Date().getFullYear()}</span> {site.name}</span><a href={`${path(`${lang}/`)}#home`}>{t.top} ↑</a></div>{!site.readyForPublication && <p class="draft-label">{t.draft}</p>}</footer>

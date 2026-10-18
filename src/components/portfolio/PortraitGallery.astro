@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import pose1 from '../../assets/images/profile/athallapose1.png';
+import pose2 from '../../assets/images/profile/athallapose2.png';
+import pose3 from '../../assets/images/profile/athallapose3.png';
+import pose4 from '../../assets/images/profile/athallapose4.png';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = lang === 'id'
+    ? { gallery: 'Foto Athalla Reinaldi', pose: 'Pose', previous: 'Foto sebelumnya', next: 'Foto berikutnya', pause: 'Jeda foto otomatis', play: 'Putar foto otomatis' }
+    : { gallery: 'Photos of Athalla Reinaldi', pose: 'Pose', previous: 'Previous photo', next: 'Next photo', pause: 'Pause automatic photos', play: 'Play automatic photos' };
+---
+<figure class="introduction-photo" data-portrait-gallery aria-label={t.gallery}>
+    <div class="portrait-track" tabindex="0" aria-label={t.gallery}>
+        {[pose1, pose2, pose3, pose4].map((photo, index) => <Image src={photo} alt={`Athalla Reinaldi — ${t.pose} ${index + 1}`} width={640} format="webp" loading="lazy" />)}
+    </div>
+    <button hidden type="button" class="portrait-pause" data-portrait-play data-pause={t.pause} data-play={t.play} aria-label={t.pause}>{t.pause}</button>
+</figure>
+<style>
+    figure { position: relative; min-width: 0; margin: 0; padding: 12px; border: 1px solid var(--border); background: var(--surface); border-radius: 24px; }
+    .portrait-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 16px; }
+    .portrait-track img { flex: 0 0 100%; width: 100%; min-width: 0; height: 420px; object-fit: contain; scroll-snap-align: start; }
+    .portrait-pause { position: absolute; inset: 12px; opacity: 0; border: 0; border-radius: 16px; background: transparent; color: transparent; }
+    .portrait-pause:focus-visible { opacity: 1; background: var(--surface); color: var(--text); inset: auto 20px 20px; min-height: 44px; padding: 8px 16px; }
+    @media (max-width: 767px) { .portrait-track img { height: 340px; } }
+    @media print { figure { display: none; } }
+</style>
+<script>
+    document.querySelectorAll<HTMLElement>('[data-portrait-gallery]').forEach(gallery => {
+        const track = gallery.querySelector<HTMLElement>('.portrait-track')!;
+        const play = gallery.querySelector<HTMLButtonElement>('[data-portrait-play]')!;
+        const motion = matchMedia('(prefers-reduced-motion: reduce)');
+        let paused = motion.matches;
+        let visible = false;
+        let timer: ReturnType<typeof setInterval> | undefined;
+        const stop = () => { clearInterval(timer); timer = undefined; };
+        const sync = () => {
+            stop();
+            play.textContent = (paused ? play.dataset.play : play.dataset.pause)!;
+            play.setAttribute('aria-label', (paused ? play.dataset.play : play.dataset.pause)!);
+            const running = !paused && visible && !document.hidden && !gallery.matches(':hover') && !gallery.contains(document.activeElement);
+            if (running) timer = setInterval(() => {
+                const index = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+                track.scrollTo({ left: ((index + 1) % track.children.length) * track.clientWidth, behavior: 'instant' });
+            }, 4000);
+        };
+        play.addEventListener('click', () => { paused = !paused; sync(); });
+        gallery.addEventListener('mouseenter', sync);
+        gallery.addEventListener('mouseleave', sync);
+        gallery.addEventListener('focusin', sync);
+        gallery.addEventListener('focusout', () => requestAnimationFrame(sync));
+        gallery.addEventListener('pointerdown', stop);
+        gallery.addEventListener('pointerup', sync);
+        document.addEventListener('visibilitychange', sync);
+        motion.addEventListener('change', () => { paused = motion.matches; sync(); });
+        new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }).observe(gallery);
+        addEventListener('pagehide', stop);
+        play.hidden = false;
+        sync();
+    });
+</script>

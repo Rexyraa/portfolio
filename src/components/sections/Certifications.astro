@@ -1,0 +1,10 @@
+---
+import { messages } from '../../i18n';
+import { certifications } from '../../data/certifications';
+import { path } from '../../utils/paths';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = messages[lang];
+const items = certifications.filter(c => c.published);
+---
+{items.length > 0 && <section id="certifications" class="section container"><p class="section-label">06 / {t.nav.certifications}</p><h2>{t.nav.certifications}</h2><div class="card-grid">{items.map(c => <article class="card"><h3>{c.title[lang]}</h3><p>{c.issuer} · {new Intl.DateTimeFormat(lang).format(new Date(c.issuedAt))}</p><a href={path(c.originalAsset)} data-dialog={c.id}>{t.view}</a><dialog id={c.id}><form method="dialog"><button class="button secondary">{t.close}</button></form><h3>{c.title[lang]}</h3>{/\.pdf$/i.test(c.previewAsset) ? <object data={path(c.previewAsset)} type="application/pdf" aria-label={c.title[lang]}><p>{t.previewFailed}</p></object> : <img src={path(c.previewAsset)} alt={c.title[lang]} loading="lazy" />}<p>{t.previewFailed}</p><a href={path(c.originalAsset)} target="_blank" rel="noopener noreferrer">{t.original}<span class="sr-only"> ({t.newTab})</span></a></dialog></article>)}</div></section>}

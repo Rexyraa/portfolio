@@ -1,0 +1,68 @@
+/* ponytail: system fonts until licensed local Inter and Plus Jakarta Sans files are supplied. */
+body {
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.65;
+    font-size: 16px
+}
+
+h1,
+h2,
+h3,
+h4,
+.brand {
+    font-family: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+    line-height: 1.18;
+    letter-spacing: -.045em
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 750;
+    margin: .1em 0 .28em
+}
+
+h2 {
+    font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+    max-width: 20ch;
+    margin: 0 0 1.2rem
+}
+
+h3 {
+    font-size: 1.25rem;
+    letter-spacing: -.025em;
+    margin: .4rem 0 .8rem
+}
+
+h4 {
+    font-size: 1.2rem
+}
+
+p {
+    color: var(--muted);
+    max-width: 70ch
+}
+
+strong {
+    font-weight: 650
+}
+
+small {
+    font-size: .78rem
+}
+
+.eyebrow,
+.section-label {
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--accent)
+}
+
+.section-label {
+    margin: 0 0 1.4rem
+}
+
+.muted {
+    color: var(--muted)
+}

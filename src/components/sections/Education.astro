@@ -1,0 +1,21 @@
+---
+import { messages } from '../../i18n';
+import AssetMark from '../ui/AssetMark.astro';
+import { education } from '../../data/education';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = messages[lang];
+---
+<section id="education" class="section container">
+	<p class="section-label">05</p>
+	<h2>{t.nav.education.toUpperCase()}</h2>
+	{education.map(item => <article class="card education-card" data-education={item.id}>
+		<AssetMark file={item.logo} monogram={item.monogram} alt={`${t.logo}: ${item.institution}`} />
+		<div>
+			<p class="eyebrow">{item.startYear}–{item.endYear ?? t.present}</p>
+			<h3>{item.institution}</h3>
+			{item.program && <p>{item.program[lang]}</p>}
+			{item.status && <span class="badge">{item.status[lang]}</span>}
+		</div>
+	</article>)}
+</section>

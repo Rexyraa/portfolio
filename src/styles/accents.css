@@ -1,0 +1,28 @@
+#home,
+#skills,
+#projects {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+}
+
+#home {
+    background: linear-gradient(120deg, var(--background) 30%, var(--raised));
+}
+
+#skills {
+    background: linear-gradient(160deg, var(--surface) 25%, color-mix(in srgb, var(--raised) 60%, var(--surface)));
+}
+
+#projects {
+    background: linear-gradient(25deg, var(--surface) 35%, var(--raised));
+}
+
+.hero-art::before {
+    content: '';
+    position: absolute;
+    inset: -10%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--primary) 20%, transparent), transparent 68%);
+    pointer-events: none;
+}

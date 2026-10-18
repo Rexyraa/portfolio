@@ -1,0 +1,113 @@
+.button,
+.icon-button,
+.header-controls summary,
+.social-card,
+.cv-card a {
+    transition: background 180ms, color 180ms, border-color 180ms, box-shadow 180ms, transform 180ms;
+}
+
+.button {
+    border-radius: 999px;
+    padding-inline: 24px;
+}
+
+.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    box-shadow: 0 5px 16px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.primary:hover {
+    box-shadow: 0 7px 22px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.secondary {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.button:hover,
+.social-card:hover {
+    transform: translateY(-2px);
+}
+
+.button:active,
+.icon-button:active,
+.social-card:active,
+.cv-card a:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.icon-button,
+.header-controls summary {
+    border-radius: 50%;
+}
+
+.icon-button:hover,
+.header-controls summary:hover {
+    border-color: var(--primary);
+    box-shadow: 0 3px 12px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.icon-button:disabled {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--control-border);
+}
+
+.cv-card .actions {
+    gap: 8px;
+}
+
+.cv-card a {
+    justify-content: center;
+    padding: 8px 14px;
+    border: 1px solid var(--control-border);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.cv-card a:hover {
+    background: var(--raised);
+    border-color: var(--primary);
+}
+
+.cv-card a[download] {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: transparent;
+}
+
+.cv-card a[download]:hover {
+    background: var(--primary-hover);
+}
+
+.contact .secondary {
+    background: #182840;
+}
+
+.popover a {
+    border-radius: 12px;
+}
+
+.popover a[aria-current] {
+    background: var(--raised);
+    color: var(--primary);
+    font-weight: 650;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .button,
+    .icon-button,
+    .header-controls summary,
+    .social-card,
+    .cv-card a {
+        transition: none;
+    }
+
+    .button:hover,
+    .social-card:hover {
+        transform: none;
+    }
+}

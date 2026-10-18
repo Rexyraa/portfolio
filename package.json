@@ -1,0 +1,23 @@
+{
+    "name": "athalla-portfolio",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "npm run validate:content && astro build && npm run check:links",
+        "preview": "astro preview",
+        "check": "astro check",
+        "validate:content": "node scripts/validate-content.mjs",
+        "check:links": "node scripts/check-links.mjs",
+        "test:e2e": "node --test tests/e2e/*.test.mjs"
+    },
+    "dependencies": {
+        "astro": "^7.4.0"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.10",
+        "@types/node": "^26.6.5",
+        "typescript": "^6.0.3"
+    }
+}

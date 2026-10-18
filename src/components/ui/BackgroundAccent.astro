@@ -1,0 +1,22 @@
+<div class="background-accent" aria-hidden="true">
+    <span class="accent-dots"></span>
+    <svg class="accent-curves" viewBox="0 0 600 400" fill="none" preserveAspectRatio="xMidYMid meet">
+        <path d="M-40 360C100 360 120 35 300 100S460 340 640 30" />
+        <path d="M-40 385C110 385 145 65 310 125S480 365 640 60" />
+        <path d="M0 280H600M120 0V400" class="accent-axes" />
+    </svg>
+</div>
+<style>
+    .background-accent { position: absolute; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+    .background-accent::before { content: ''; position: absolute; width: min(750px, 100%); aspect-ratio: 1; right: -12%; top: -15%; background: radial-gradient(ellipse, color-mix(in srgb, var(--primary) 13%, transparent), transparent 68%); }
+    .accent-dots { position: absolute; width: min(600px, 85%); height: 480px; top: 0; right: 0; opacity: .2; background-image: conic-gradient(at 2px 2px, transparent 75%, var(--accent) 0); background-size: 28px 28px; mask-image: linear-gradient(90deg, transparent, #000 80%), linear-gradient(0deg, transparent, #000 80%); mask-composite: intersect; }
+    .accent-curves { position: absolute; width: min(650px, 90%); height: auto; right: -3%; bottom: 0; stroke: var(--primary); stroke-width: 1; opacity: .14; }
+    .accent-axes { opacity: .3; }
+    :global(#skills) .accent-dots { right: auto; left: 0; top: auto; bottom: 0; transform: rotate(180deg); }
+    :global(#skills) .background-accent::before { right: auto; left: -20%; top: 15%; }
+    :global(#skills) .accent-curves { bottom: auto; top: -60px; right: -100px; transform: rotate(12deg); }
+    :global(#projects) .accent-dots { top: 0; right: -60px; transform: rotate(15deg); }
+    :global(#projects) .background-accent::before { top: auto; bottom: -55%; right: 5%; }
+    :global(#projects) .accent-curves { right: auto; left: -100px; bottom: -80px; transform: rotate(180deg); }
+    @media (max-width: 767px) { .accent-dots { opacity: .13; height: 300px; } .accent-curves { opacity: .1; } }
+</style>

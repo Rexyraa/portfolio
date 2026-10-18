@@ -1,0 +1,36 @@
+---
+import { messages } from '../../i18n';
+import { site } from '../../config/site';
+import { path } from '../../utils/paths';
+import { imageAsset } from '../../utils/assets';
+import BackgroundAccent from '../ui/BackgroundAccent.astro';
+import { statSync } from 'node:fs';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = messages[lang];
+const cv = site.cvAssets[lang];
+const portrait = imageAsset(site.portrait);
+const size = cv ? new Intl.NumberFormat(lang, { maximumFractionDigits: 0 }).format(statSync(`public/${cv}`).size / 1024) : '';
+const cvLanguage = site.cvLanguage || lang.toUpperCase();
+---
+<section id="home" class="hero">
+  <BackgroundAccent />
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="status-dot"></span>{t.eyebrow}</p>
+      <p class="hello">{t.intro}</p>
+      <h1>Athalla<br /><span>Reinaldi.</span></h1>
+      <p class="hero-description">{t.bio}</p>
+      <div class="actions"><a class="button primary" href="#experience">{t.experienceCta} <span aria-hidden="true">↗</span></a><a class="button secondary" href="#contact">{t.connect} <span aria-hidden="true">→</span></a></div>
+      <div class="cv-card"><span class="file-icon" aria-hidden="true">↧</span><div><strong>Curriculum Vitae</strong><small>{cv ? `PDF · ${size} KB · ${cvLanguage}` : t.cvPending}</small></div>{cv && <div class="actions"><a href={path(cv)} target="_blank" rel="noopener noreferrer" aria-label={`${t.view} ${site.name} CV PDF ${cvLanguage} (${t.newTab})`}>{t.view}</a><a href={path(cv)} download={`Athalla-Reinaldi-CV-${cvLanguage}.pdf`}>{t.download}</a></div>}</div>
+    </div>
+    <div class="hero-art">
+      <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
+      <div class="portrait">{portrait ? <img src={portrait} alt={site.name} width="400" height="400" fetchpriority="high" /> : <span aria-hidden="true">AR<span class="portrait-dot">.</span></span>}</div>
+      <span class="floating-chip chip-one" aria-hidden="true">ƒ(x) <span>Mathematics</span></span>
+      <span class="floating-chip chip-two" aria-hidden="true">↗ <span>Business</span></span>
+      <span class="art-coordinate" aria-hidden="true">06°24′ S &nbsp; 106°49′ E</span>
+    </div>
+  </div>
+  <div class="container hero-bottom"><span>Depok, Indonesia · UTC+7</span><span>{t.interests}</span></div>
+</section>

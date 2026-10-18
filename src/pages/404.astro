@@ -1,0 +1,16 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { path } from '../utils/paths';
+---
+<MainLayout lang="id" title="404"><section class="section container not-found"><p class="section-label">404</p><h1 data-error-title>Halaman tidak ditemukan.</h1><a class="button primary" data-error-home href={path('id/')}>Kembali ke beranda</a></section></MainLayout>
+<script>
+  import { messages } from '../i18n';
+  import { path } from '../utils/paths';
+  const lang = location.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '').startsWith('/en/') ? 'en' : 'id';
+  document.documentElement.lang = lang;
+  document.querySelector('[data-error-title]')!.textContent = messages[lang].notFound;
+  const home = document.querySelector<HTMLAnchorElement>('[data-error-home]')!;
+  home.textContent = messages[lang].home;
+  home.href = path(`${lang}/`);
+  document.querySelectorAll<HTMLElement>('[data-locale]').forEach(a => { (a as HTMLAnchorElement).href = path(`${a.dataset.locale}/`); });
+</script>

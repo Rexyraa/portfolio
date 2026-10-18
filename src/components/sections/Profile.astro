@@ -1,0 +1,6 @@
+---
+import { messages } from '../../i18n';
+import type { Locale } from '../../types/portfolio';
+const t = messages[(Astro.props as { lang: Locale }).lang];
+---
+<section id="about" class="section container"><p class="section-label">01 / {t.nav.about}</p><div class="two-column"><div><h2>{t.aboutTitle}</h2><p>{t.aboutBody}</p></div><dl class="card facts"><div><dt>{t.location}</dt><dd>Depok, Indonesia</dd></div><div><dt>{t.educationLabel}</dt><dd>{t.degree}<br />Universitas Indonesia</dd></div><div><dt>{t.focus}</dt><dd>Consulting · Data · Finance</dd></div></dl></div></section>

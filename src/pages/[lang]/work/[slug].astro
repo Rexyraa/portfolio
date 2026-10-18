@@ -1,0 +1,44 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import ProjectGallery from '../../../components/portfolio/ProjectGallery.astro';
+import ProjectPanels from '../../../components/portfolio/ProjectPanels.astro';
+import { projects } from '../../../data/projects';
+import { locales, messages } from '../../../i18n';
+import { path } from '../../../utils/paths';
+import { imageAsset } from '../../../utils/assets';
+import type { Locale } from '../../../types/portfolio';
+export function getStaticPaths() { return projects.filter(p => p.published).flatMap(project => locales.map(lang => ({params:{lang,slug:project.slug},props:{project}}))); }
+const { project } = Astro.props;
+const lang = Astro.params.lang as Locale;
+const t = messages[lang];
+const narratives = import.meta.glob('../../../content/projects/*/*.md');
+const structured = project.detailMode === 'preview' || project.detailMode === 'overview';
+const narrative = structured ? null : await narratives[`../../../content/projects/${lang}/${project.slug}.md`]() as { Content: any };
+const Content = narrative?.Content;
+---
+<MainLayout lang={lang} title={project.title[lang]} description={project.summary[lang]}>
+	<article class:list={['section container', structured ? 'project-overview' : 'case-study']}>
+		<a href={`${path(`${lang}/`)}#projects`}>← {t.backProjects}</a>
+		{project.date && <p class="section-label">{project.date}</p>}
+		{structured ? <>
+			<div class="project-hero">
+				<div class="project-intro"><p class="eyebrow">{project.kind?.[lang]}</p><h1>{project.title[lang]}</h1><span class="badge">{project.status[lang]}{project.status.en === 'In development' && <span class="development-dots" aria-hidden="true"><i></i><i></i><i></i></span>}</span><p>{project.summary[lang]}</p><div class="tags">{project.tags.map(tag => <span>{tag}</span>)}</div></div>
+				<div class="project-preview"><ProjectGallery lang={lang} images={project.gallery || []} />{project.detailMode === 'preview' && <p class="preview-note">{t.developmentPreview}</p>}</div>
+			</div>
+			{(project.demoUrl || project.githubUrl) && <div class="project-links">
+				{project.demoUrl && <a class="button" href={project.demoUrl} target="_blank" rel="noopener noreferrer">{lang === 'id' ? 'Buka demo' : 'Explore live demo'} ↗<span class="sr-only"> ({t.newTab})</span></a>}
+				{project.githubUrl && <a class="button secondary" href={project.githubUrl} target="_blank" rel="noopener noreferrer">{lang === 'id' ? 'Lihat kode' : 'View source on GitHub'} ↗<span class="sr-only"> ({t.newTab})</span></a>}
+			</div>}
+			<ProjectPanels lang={lang} sections={project.sections || []} />
+		</> : <>
+			<h1>{project.title[lang]}</h1><span class="badge">{project.status[lang]}</span>
+			<p>{project.summary[lang]}</p>
+			<dl class="card facts">{project.role && <div><dt>{t.role}</dt><dd>{project.role[lang]}</dd></div>}{project.team && <div><dt>{t.team}</dt><dd>{project.team[lang]}</dd></div>}<div><dt>{t.status}</dt><dd>{project.status[lang]}</dd></div></dl>
+			{project.cover && <img src={imageAsset(project.cover)} alt={project.title[lang]} width="1200" height="720" />}
+			{Content && <div class="prose"><Content /></div>}
+		</>}
+		{project.artifacts.map(a => <a class="button secondary" href={a.url.startsWith('https:') ? a.url : path(a.url)} target="_blank" rel="noopener noreferrer">{a.label[lang]}<span class="sr-only"> ({t.newTab})</span></a>)}
+		{!structured && project.githubUrl && <a class="button secondary" href={project.githubUrl} target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> ({t.newTab})</span></a>}
+		{!structured && project.demoUrl && <a class="button secondary" href={project.demoUrl} target="_blank" rel="noopener noreferrer">Live demo<span class="sr-only"> ({t.newTab})</span></a>}
+	</article>
+</MainLayout>

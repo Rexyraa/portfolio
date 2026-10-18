@@ -1,0 +1,10 @@
+---
+import { messages } from '../../i18n';
+import { projects } from '../../data/projects';
+import ProjectCarousel from '../portfolio/ProjectCarousel.astro';
+import BackgroundAccent from '../ui/BackgroundAccent.astro';
+import type { Locale } from '../../types/portfolio';
+const { lang } = Astro.props as { lang: Locale };
+const t = messages[lang];
+---
+<section id="projects" class="section tinted"><BackgroundAccent /><div class="container"><p class="section-label">04</p><h2>{t.projectsTitle}</h2><p>{t.projectsBody}</p><ProjectCarousel lang={lang} projects={projects.filter(p => p.published)} /></div></section>
