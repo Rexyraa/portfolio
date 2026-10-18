@@ -12,4 +12,4 @@ for (const locale of ['id', 'en']) test(`${locale}: static content, sections, an
     assert(!html.includes('id="certifications"'));
     assert(html.includes('noindex, nofollow'));
 });
-test('root redirect and 404 exist', () => { assert(output('index.html').includes('http-equiv="refresh"')); assert(output('404.html').includes('404')); });
+test('root renders homepage without redirect and 404 exists', () => { assert(!output('index.html').includes('http-equiv="refresh"')); assert(output('index.html').includes('id="home"')); assert(output('404.html').includes('404')); });

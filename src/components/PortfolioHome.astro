@@ -1,0 +1,17 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from './sections/Hero.astro';
+import Profile from './sections/Profile.astro';
+import MagangCard from './sections/MagangCard.astro';
+import Skills from './sections/Skills.astro';
+import Experience from './sections/Experience.astro';
+import Projects from './sections/Projects.astro';
+import Education from './sections/Education.astro';
+import Certifications from './sections/Certifications.astro';
+import Contact from './sections/Contact.astro';
+import { site } from '../config/site';
+import type { Locale } from '../types/portfolio';
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+---
+<MainLayout lang={lang}><Hero lang={lang} /><Profile lang={lang} /><MagangCard lang={lang} /><Skills lang={lang} /><Experience lang={lang} ready={site.readyForPublication} /><Projects lang={lang} /><Education lang={lang} /><Certifications lang={lang} /><Contact lang={lang} /></MainLayout>

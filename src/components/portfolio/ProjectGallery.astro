@@ -1,5 +1,5 @@
 ---
-import { imageAsset } from '../../utils/assets';
+import { imageAsset, originalImageAsset } from '../../utils/assets';
 import { messages } from '../../i18n';
 import type { Locale, Project } from '../../types/portfolio';
 interface Props { lang: Locale; images: NonNullable<Project['gallery']>; }
@@ -12,8 +12,8 @@ const t = messages[lang];
   {gallery.map((image, index) => <figure data-gallery-slide>
     <a href={imageAsset(image.path)} data-dialog={`preview-${index}`} aria-label={`${t.enlarge}: ${image.alt[lang]}`}><img class="gallery-main" src={imageAsset(image.path)} alt={image.alt[lang]} /></a>
     {image.caption && <figcaption>{image.caption[lang]}</figcaption>}
-    <div class="gallery-actions"><a href={imageAsset(image.path)} data-dialog={`preview-${index}`}>{t.enlarge}</a><a href={imageAsset(image.path)}>{t.original}</a></div>
-    <dialog id={`preview-${index}`} class="image-dialog" aria-label={image.alt[lang]}><form method="dialog"><button class="button secondary" autofocus>{t.close}</button></form><img src={imageAsset(image.path)} alt={image.alt[lang]} /><a href={imageAsset(image.path)}>{t.original}</a></dialog>
+    <div class="gallery-actions"><a href={originalImageAsset(image.path)} data-dialog={`preview-${index}`}>{t.enlarge}</a><a href={originalImageAsset(image.path)}>{t.original}</a></div>
+    <dialog id={`preview-${index}`} class="image-dialog" aria-label={image.alt[lang]}><form method="dialog"><button class="button secondary" autofocus>{t.close}</button></form><img loading="lazy" src={originalImageAsset(image.path)} alt={image.alt[lang]} /><a href={originalImageAsset(image.path)}>{t.original}</a></dialog>
   </figure>)}
   {gallery.length > 1 && <div class="gallery-navigation" hidden>
     <button class="icon-button" data-gallery-prev aria-label={t.previousImage}>←</button>
