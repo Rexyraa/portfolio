@@ -12,17 +12,13 @@ const sections = Object.entries(t.nav).filter(([key]) => key !== 'certifications
 <header class="header">
   <div class="container header-inner">
     <a class="brand" href={`${home}#home`}><img src={path('ar.png')} alt="" width="35" height="35" style="object-fit: contain; flex-shrink: 0; margin-right: 3px;" /> Athalla<span class="brand-dot">.</span></a>
-    {!applicationPage && <nav class="desktop-nav" aria-label={t.menu}>{sections.map(([key, label]) => <a data-nav={key} href={`${home}#${key}`}>{label}</a>)}</nav>}
+    <nav class="desktop-nav" aria-label={t.menu}>{sections.map(([key, label]) => <a data-nav={key} href={`${home}#${key}`}>{label}</a>)}<a href={path(`${lang}/magang/`)} aria-current={applicationPage ? 'page' : undefined}>Mathcademy</a></nav>
     <div class="header-controls">
       <button hidden id="theme-toggle" class="icon-button" data-dark={t.themeDark} data-light={t.themeLight} aria-label={t.themeDark}><span aria-hidden="true">◐</span></button>
       <details class="language-menu" data-menu>
         <summary aria-label={`${t.language}: ${lang.toUpperCase()}`}>{lang.toUpperCase()} <span aria-hidden="true">⌄</span></summary>
         <div class="popover">{(['id', 'en'] as const).map(locale => <a data-locale={locale} aria-current={locale === lang ? 'true' : undefined} href={/\/(id|en)(\/|$)/.test(Astro.url.pathname) ? Astro.url.pathname.replace(/\/(id|en)(\/|$)/, `/${locale}$2`) : path(`${locale}/`)}>{locale === 'id' ? 'Indonesia' : 'English'} {locale === lang && '✓'}</a>)}</div>
       </details>
-      {!applicationPage && <details class="mobile-menu" data-menu>
-        <summary aria-label={t.menu}><span aria-hidden="true">☰</span></summary>
-        <nav class="popover" aria-label={t.menu}>{sections.map(([key, label]) => <a href={`${home}#${key}`}>{label}</a>)}</nav>
-      </details>}
     </div>
   </div>
 </header>

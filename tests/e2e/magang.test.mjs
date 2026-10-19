@@ -29,7 +29,9 @@ for (const locale of ['id', 'en']) test(`${locale}: Mathcademy static narrative 
     assert(!html.includes('data-portrait-prev') && !html.includes('data-portrait-next'));
     assert(html.includes('data-portrait-play'));
     assert(!html.includes('data-gallery-item='), 'No artwork cards until genuine work is supplied');
-    assert(!html.includes('class="desktop-nav"') && !html.includes('class="mobile-menu"'));
+    assert(html.includes('class="desktop-nav"') && !html.includes('class="mobile-menu"'));
+    assert(html.includes('>Mathcademy</a>'));
+    assert.equal((html.match(/data-portrait-select=/g) || []).length, 4);
     assert(html.includes('href="#biner"'));
     assert(html.includes('id="sampling-panel-title"') && html.includes('id="biner-panel-title"'));
     for (const title of locale === 'id' ? ['Kepedulian sosial', 'Kesadaran lingkungan', 'Kebersamaan', 'Mempersiapkan langkah berikutnya'] : ['Social awareness', 'Environmental awareness', 'Togetherness', 'Preparing for the next step']) assert(html.includes(title));
