@@ -12,7 +12,7 @@ const sections = Object.entries(t.nav).filter(([key]) => key !== 'certifications
 <header class="header">
   <div class="container header-inner">
     <a class="brand" href={`${home}#home`}><img src={path('ar.png')} alt="" width="35" height="35" style="object-fit: contain; flex-shrink: 0; margin-right: 3px;" /> Athalla<span class="brand-dot">.</span></a>
-    <nav class="desktop-nav" aria-label={t.menu}>{sections.map(([key, label]) => <a data-nav={key} href={`${home}#${key}`}>{label}</a>)}<a href={path(`${lang}/magang/`)} aria-current={applicationPage ? 'page' : undefined}>Mathcademy</a></nav>
+    <nav class="desktop-nav" aria-label={t.menu}>{sections.map(([key, label]) => <><a data-nav={key} href={`${home}#${key}`}>{label}</a>{key === 'about' && <a href={path(`${lang}/magang/`)} aria-current={applicationPage ? 'page' : undefined}>Mathcademy</a>}</>)}</nav>
     <div class="header-controls">
       <button hidden id="theme-toggle" class="icon-button" data-dark={t.themeDark} data-light={t.themeLight} aria-label={t.themeDark}><span aria-hidden="true">◐</span></button>
       <details class="language-menu" data-menu>
